@@ -1,4 +1,8 @@
 /*
+ david's code
+ */
+
+/*
 int motor1pin1 = 2;
 int motor1pin2 = 3;
 
