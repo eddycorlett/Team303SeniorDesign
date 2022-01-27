@@ -9,6 +9,10 @@ const int enPin = 8;
 const int xSensor = 9;
 const int ySensor = 10;
 
+int xValue;
+int yValue;
+int x = 0;
+
 void setup() {
   pinMode(stepPinY, OUTPUT);
   pinMode(stepPinX, OUTPUT);
@@ -41,11 +45,30 @@ void loop() {
 
 //start code here! assume position is LEFT side of array and rod is RETRACTED
 
+  
+
   //start by reading sensors
-  xValue = digitalRead(xSensor)
-  yValue = digitalRead(ySensor)
- /*
+  xValue = digitalRead(xSensor);
+  yValue = digitalRead(ySensor);
+
+  
+    xMove();
+
+  
+
+  //extend rod
+
+  if(yValue == HIGH){
+    extendRod();
+    delay(1000);  
+  }else{
+  retractRod();
+  xStepRight();
   delay(1000);
+  }
+  
+ /*
+  
   
   //enable motor direction to move
   digitalWrite(dirPin, LOW);
@@ -60,28 +83,40 @@ void loop() {
   */
 }
 
-void xMove(){
+void xStepRight(){
 
-    for (int x = 0; x < 2000000; x++){
+    for (int x = 0; x < 2000; x++){
       //stepPinX, HIGH to turn motor clockwise
       digitalWrite(stepPinX, HIGH);
       delayMicroseconds(500);
-      //digitalWrite(stepPinX, LOW);
-      //delayMicroseconds(500);
     }
-    Serial.println("First FOR loop");  
+  
+}
+void xStepLeft(){
+
+    for (int x = 0; x < 2000; x++){
+      //stepPinX, HIGH to turn motor clockwise
+      digitalWrite(stepPinX, LOW);
+      delayMicroseconds(500);
+    }
   
 }
 
 void extendRod(){
 
-  for (int x = 0; x < 2000000; x++){
+  for (int x = 0; x < 2000; x++){
       //stepPinY, HIGH to turn motor clockwise
       digitalWrite(stepPinY, HIGH);
       delayMicroseconds(500);
-      //digitalWrite(stepPinX, LOW);
-      //delayMicroseconds(500);
     }
 
 }
+void retractRod(){
+
+  for (int x = 0; x < 2000; x++){
+      //stepPinY, HIGH to turn motor clockwise
+      digitalWrite(stepPinY, LOW);
+      delayMicroseconds(500);
+    }
+
 }
