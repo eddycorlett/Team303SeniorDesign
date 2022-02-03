@@ -1,25 +1,33 @@
 // libraries 
 
 //what are you doing stepPin
-
-const int stepPinY = 5;
-const int stepPinX = 6;
+const int motor1Pin1 = 2;
+const int motor1Pin2 = 3;
+const int motor2Pin1 = 4;
+const int motor2Pin2 = 5;
+const int pulsePin = 6;
 const int dirPin = 7;
 const int enPin = 8;
 const int xSensor = 9;
 const int ySensor = 10;
+const int buttonPin = 22;
 
 int xValue;
 int yValue;
 int x = 0;
+int buttonState = 0;
 
 void setup() {
-  pinMode(stepPinY, OUTPUT);
-  pinMode(stepPinX, OUTPUT);
+  pinMode(motor1Pin1, OUTPUT);
+  pinMode(motor1Pin2, OUTPUT);
+  pinMode(motor2Pin1, OUTPUT);
+  pinMode(motor2Pin2, OUTPUT);
+  pinMode(pulsePin, OUTPUT);
   pinMode(dirPin, OUTPUT);
   pinMode(enPin, OUTPUT);
   pinMode(xSensor, INPUT);
   pinMode(ySensor, INPUT);
+  pinMode(buttonPin, INPUT);
   
   
   digitalWrite(enPin, LOW);
@@ -118,5 +126,19 @@ void retractRod(){
       digitalWrite(stepPinY, LOW);
       delayMicroseconds(500);
     }
+
+void pressButton(){
+  buttonState = digitalRead(buttonPin);
+
+  if buttonState == HIGH){
+    digitalWrite(motor1Pin1, LOW);
+    digitalWrite(motor2Pin1, LOW);
+  }
+  else {
+    digitalWrite(motor1Pin1, HIGH); // on first while LED 
+    digitalWrite(motor2Pin1, HIGH);
+    delay(1000);
+  }
+}
 
 }
