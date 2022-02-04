@@ -53,26 +53,24 @@ void loop() {
 
 //start code here! assume position is LEFT side of array and rod is RETRACTED
 
+  //call functions to test reliability of functions 
+  xStepRight();
   
 
   //start by reading sensors
   xValue = digitalRead(xSensor);
   yValue = digitalRead(ySensor);
 
-  
-    xMove();
-
-  
-
   //extend rod
 
   if(yValue == HIGH){
     extendRod();
     delay(1000);  
-  }else{
-  retractRod();
-  xStepRight();
-  delay(1000);
+  }
+  else{
+    retractRod();
+    xStepRight();
+    delay(1000);
   }
   
  /*
