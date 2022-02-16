@@ -1,15 +1,16 @@
+//files included 
 #include <Wire.h>
 #include <LIDARLite.h>
 #include <LIDARLite_v3HP.h>
 #include <LIDARLite_v4LED.h>
 
- 
- //Global variables
+// variables
 const int buttonPin = 12;
 const int stepPin = 6;
 const int dirPin = 7;
 const int enPin = 8;
-const int stepsPerRev = 1600; //1600 
+const int delayValue = 200;   //controls the speed of the motor
+const int stepsPerRev = 1600; //controls how long the motor rotates for
 const int yDirTime = 2000;    //time it takes for rod to scope out and back in
 LIDARLite lidarLite;          //Garmin Variable
 int cal_cnt = 0;              //Garmin Variable
@@ -29,51 +30,31 @@ void setup() {
   pinMode(dirPin, OUTPUT);
   pinMode(enPin, OUTPUT);
   pinMode(buttonPin, INPUT);
+  Serial.begin(9600);
+  Serial.println("Hello World");
 
-  //Garmin Sensor Set up
+  //Garmin sensor set up
   lidarLite.begin(0, true); // Set configuration to default and I2C to 400 kHz
   lidarLite.configure(0); // Change this number to try out alternate configurations
-  Serial.begin(9600);
 }
 
-/*int xDirStepClockwise(){
-  //enable motor direction to move clockwise 
-  digitalWrite(dirPin, HIGH);
-  // makes 200 pulses which equals 1 revolution 
-  for (int x = 0; x < stepsPerRev; x++){
-    digitalWrite(stepPin, HIGH);
-    delayMicroseconds(500);
-    digitalWrite(stepPin, LOW);
-    delayMicroseconds(500);
-  }
-}
-*/
-int xDirStepCounterClockwise(){
-  digitalWrite(dirPin, LOW);
-  // makes 200 pulses which equals 1 revolution
-  for (int x = 0; x < stepsPerRev; x++){
-    digitalWrite(stepPin, HIGH);
-    delayMicroseconds(500);
-    digitalWrite(stepPin, LOW);
-    delayMicroseconds(500);
-    }
-}
-int stopMotor(){//stops motor for a certain amount of time or until button is pressed
-  for(int x = 0; x < stepsPerRev; x++){
-    digitalWrite(enPin, HIGH);
-    delayMicroseconds(1000);
-  }
-}
-void move_motors(int dist){
-  if (dist >= 50 ){
-        xDirStepCounterClockwise();
-      }
-  else {
-      stopMotor();
-      }
-  }
 void loop() {
-  //Garmin Loop
+//  //for loop to start motor based on time
+//  for(revs = 0; revs < 5; revs++){
+//      digitalWrite(enPin, LOW);
+//      xDirC = xDirStepClockwise();
+//      Serial.print(revs);
+//  }
+//  //for loop to stop motor based on time
+//  for(revs = 0; revs < 5; revs++){
+//      digitalWrite(enPin, HIGH);
+//      motorStop = stopMotor();
+//      Serial.print("stopped");
+//  }
+//  //buttonFunc = pressButton();
+//  //xDirCC = xDirStepCounterClockwise();
+  
+   //Garmin Loop
   // At the beginning of every 100 readings,
   // take a measurement with receiver bias correction
   if ( cal_cnt == 0 ) {
@@ -95,8 +76,64 @@ void loop() {
   delay(10);
 }
 
-/*
- * int pressButton(){
+int xDirStepClockwise(){
+  //enable motor direction to move clockwise 
+  digitalWrite(dirPin, HIGH);
+  // makes 200 pulses which equals 1 revolution 
+  for (int x = 0; x < stepsPerRev; x++){
+    digitalWrite(stepPin, HIGH);
+    delayMicroseconds(delayValue);
+    digitalWrite(stepPin, LOW);
+    delayMicroseconds(delayValue);
+  }
+}
+
+int xDirStepCounterClockwise(){
+    //enable motor direction to move counterclockwise
+  digitalWrite(dirPin, LOW);
+  // makes 200 pulses which equals 1 revolution
+  for (int x = 0; x < stepsPerRev; x++){
+    digitalWrite(stepPin, HIGH);
+    delayMicroseconds(delayValue);
+    digitalWrite(stepPin, LOW);
+    delayMicroseconds(delayValue);
+    }
+}
+
+int stopMotor(){
+  //stops motor for a certain amount of time or until button is pressed
+  for(int x = 0; x < stepsPerRev; x++){
+    digitalWrite(enPin, HIGH);
+    delayMicroseconds(delayValue);
+  }
+  // alternate //  
+  //if (buttonState == LOW){
+  //  for(x = 0; x < yDirTime; x++){
+  //
+//    digitalWrite(enPin, HIGH);
+  //}
+//  }
+//  else{
+//    digitalWrite(enPin, LOW);
+//  }
+
+  //alternate forloop for button pressed
+  //maybe use different expression, better solution
+//  for(int x = 0; x == buttonState; x++){
+//    
+//  }
+}
+
+void move_motors(int dist){
+  if (dist >= 50 ){
+        xDirStepCounterClockwise();
+      }
+  else {
+      stopMotor();
+      }
+  }
+
+int pressButton(){
   buttonState = digitalRead(buttonPin);
 
   // HIGH = pressed
@@ -115,4 +152,3 @@ void loop() {
   //resetting button state
   buttonState = 0;
 }
- */
