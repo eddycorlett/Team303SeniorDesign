@@ -9,7 +9,7 @@ const int buttonPin = 12;
 const int stepPin = 6;
 const int dirPin = 7;
 const int enPin = 8;
-const int stepsPerRev = 1600; //200000 or a number that doesnt give a warning
+const int stepsPerRev = 1600; //1600 
 const int yDirTime = 2000;    //time it takes for rod to scope out and back in
 LIDARLite lidarLite;          //Garmin Variable
 int cal_cnt = 0;              //Garmin Variable
