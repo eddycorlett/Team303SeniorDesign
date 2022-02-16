@@ -10,7 +10,6 @@ int cal_cnt = 0;
 void setup()
 {
   Serial.begin(9600); // Initialize serial connection to display distance readings
-
   lidarLite.begin(0, true); // Set configuration to default and I2C to 400 kHz
   lidarLite.configure(0); // Change this number to try out alternate configurations
 }
@@ -26,7 +25,7 @@ void loop()
   } else {
     dist = lidarLite.distance(false); // Without bias correction
   }
-
+  
   // Increment reading counter
   cal_cnt++;
   cal_cnt = cal_cnt % 100;
