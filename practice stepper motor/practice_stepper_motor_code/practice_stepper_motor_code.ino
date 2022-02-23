@@ -31,7 +31,7 @@ void setup() {
   pinMode(enPin, OUTPUT);
   pinMode(buttonPin, INPUT);
   Serial.begin(9600);
-  Serial.println("Hello World");
+  //Serial.println("Hello World");
 
   //Garmin sensor set up
   lidarLite.begin(0, true); // Set configuration to default and I2C to 400 kHz
