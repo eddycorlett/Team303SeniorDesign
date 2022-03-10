@@ -34,46 +34,46 @@ void setup() {
   //Serial.println("Hello World");
 
   //Garmin sensor set up
-  lidarLite.begin(0, true); // Set configuration to default and I2C to 400 kHz
-  lidarLite.configure(0); // Change this number to try out alternate configurations
+//  lidarLite.begin(0, true); // Set configuration to default and I2C to 400 kHz
+//  lidarLite.configure(0); // Change this number to try out alternate configurations
 }
 
 void loop() {
-//  //for loop to start motor based on time
-//  for(revs = 0; revs < 5; revs++){
-//      digitalWrite(enPin, LOW);
-//      xDirC = xDirStepClockwise();
-//      Serial.print(revs);
-//  }
-//  //for loop to stop motor based on time
-//  for(revs = 0; revs < 5; revs++){
-//      digitalWrite(enPin, HIGH);
-//      motorStop = stopMotor();
-//      Serial.print("stopped");
-//  }
-//  //buttonFunc = pressButton();
-//  //xDirCC = xDirStepCounterClockwise();
-  
-   //Garmin Loop
-  // At the beginning of every 100 readings,
-  // take a measurement with receiver bias correction
-  if ( cal_cnt == 0 ) {
-    dist = lidarLite.distance();      // With bias correction
-  } else {
-    dist = lidarLite.distance(false); // Without bias correction
+  //for loop to start motor based on time
+  for(revs = 0; revs < 5; revs++){
+      digitalWrite(enPin, LOW);
+      xDirC = xDirStepClockwise();
+      Serial.print(revs);
   }
-  // Increment reading counter
-  cal_cnt++;
-  cal_cnt = cal_cnt % 100;
+  //for loop to stop motor based on time
+  for(revs = 0; revs < 5; revs++){
+      digitalWrite(enPin, HIGH);
+      motorStop = stopMotor();
+      Serial.print("stopped");
+  }
+  //buttonFunc = pressButton();
+  //xDirCC = xDirStepCounterClockwise();
   
-  //Call To move motors
-  move_motors(dist);
-
-  // Display distance
-  Serial.print(dist);
-  Serial.println(" cm");
-
-  delay(10);
+//   //Garmin Loop
+//  // At the beginning of every 100 readings,
+//  // take a measurement with receiver bias correction
+//  if ( cal_cnt == 0 ) {
+//    dist = lidarLite.distance();      // With bias correction
+//  } else {
+//    dist = lidarLite.distance(false); // Without bias correction
+//  }
+//  // Increment reading counter
+//  cal_cnt++;
+//  cal_cnt = cal_cnt % 100;
+//  
+//  //Call To move motors
+//  move_motors(dist);
+//
+//  // Display distance
+//  Serial.print(dist);
+//  Serial.println(" cm");
+//
+//  delay(10);
 }
 
 int xDirStepClockwise(){
